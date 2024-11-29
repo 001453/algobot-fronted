@@ -1,14 +1,6 @@
 import React from 'react';
 import { List, ListItem, ListItemText, Typography, Chip, Box } from '@mui/material';
-
-interface Position {
-  id: number;
-  pair: string;
-  entryPrice: string;
-  currentPrice: string;
-  profit: string;
-  amount: string;
-}
+import { Position } from '../types/position'; // Position türünü ayrı bir dosyadan import ediyoruz
 
 interface ActivePositionsProps {
   positions: Position[];
@@ -34,7 +26,7 @@ const ActivePositions: React.FC<ActivePositionsProps> = ({ positions }) => {
             </Typography>
             <Chip 
               label={position.profit}
-              color={position.profit.startsWith('+') ? 'success' : 'error'}
+              color={parseFloat(position.profit) >= 0 ? 'success' : 'error'}
               size="small"
             />
           </Box>

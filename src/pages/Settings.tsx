@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tabs, Tab, Box } from '@mui/material';
-import { RootState } from '../store/rootReducer';
-import { updateTradingPreferences, updateNotificationSettings } from '../store/settingsSlice';
-import GeneralSettings from '../components/Settings/GeneralSettings';
-import TradingPreferences from '../components/Settings/TradingPreferences';
-import NotificationSettings from '../components/Settings/NotificationSettings';
-import { TradingPreferences as TradingPreferencesType, NotificationSettings as NotificationSettingsType } from '../types';
-import { TabPanel } from '../components/TabPanel';
+import { RootState } from '../../store/rootReducer';
+import { updateTradingPreferences, updateNotificationSettings, updateGeneralSettings } from '../../store/settingsSlice';
+import GeneralSettings from '../../components/Settings/GeneralSettings';
+import TradingPreferences from '../../components/Settings/TradingPreferences';
+import NotificationSettings from '../../components/Settings/NotificationSettings';
+import { TradingPreferencesType, NotificationSettingsType, GeneralSettingsType } from '../../types/settings';
+import TabPanel from '../../components/TabPanel';
 
 const Settings: React.FC = () => {
   const dispatch = useDispatch();
   const settings = useSelector((state: RootState) => state.settings);
   const [tabValue, setTabValue] = useState(0);
+
+  const handleGeneralSettingsUpdate = (generalSettings: GeneralSettingsType) => {
+    dispatch(updateGeneralSettings(generalSettings));
+  };
 
   const handleTradingPreferencesUpdate = (tradingPrefs: TradingPreferencesType) => {
     dispatch(updateTradingPreferences(tradingPrefs));
@@ -22,7 +26,7 @@ const Settings: React.FC = () => {
     dispatch(updateNotificationSettings(notificationSettings));
   };
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 
@@ -36,18 +40,18 @@ const Settings: React.FC = () => {
       <TabPanel value={tabValue} index={0}>
         <GeneralSettings 
           settings={settings.general} 
-          onSave={(generalSettings: any) => {/* Genel ayarları güncelle */}}
+          onSave={handleGeneralSettingsUpdate}
         />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
         <TradingPreferences
-          preferences={settings.trading}
+          settings={settings.trading}
           onSave={handleTradingPreferencesUpdate}
         />
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
         <NotificationSettings
-          settings={settings.notifications}
+          notifications={settings.notifications}
           onSave={handleNotificationUpdate}
         />
       </TabPanel>

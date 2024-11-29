@@ -3,17 +3,13 @@ import { Grid, Typography, Paper } from '@mui/material';
 import PerformanceCards from './PerformanceCards';
 import PortfolioChart from './PortfolioChart';
 import ActivePositions from './ActivePositions';
+import { Position } from '../types/position'; // Position türünü ayrı bir dosyadan import ediyoruz
 
-interface Position {
-  id: string;
-  symbol: string;
-  entryPrice: number;
-  currentPrice: number;
-  amount: number;
-  pnl: number;
+interface DashboardProps {
+  // Eğer prop'lar eklemek isterseniz buraya ekleyebilirsiniz
 }
 
-const Dashboard: React.FC = () => {
+const Dashboard: React.FC<DashboardProps> = () => {
   const balance = 10000;
   const positions: Position[] = [
     {
@@ -43,7 +39,7 @@ const Dashboard: React.FC = () => {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <Paper elevation={3} style={{ padding: '20px' }}>
+        <Paper elevation={3} sx={{ padding: '20px' }}>
           <PerformanceCards
             balance={balance}
             activePositions={positions.length}
@@ -52,7 +48,7 @@ const Dashboard: React.FC = () => {
         </Paper>
       </Grid>
       <Grid item xs={12} md={8}>
-        <Paper elevation={3} style={{ padding: '20px' }}>
+        <Paper elevation={3} sx={{ padding: '20px' }}>
           <Typography variant="h6" gutterBottom>
             Portfolio Performance
           </Typography>
@@ -60,7 +56,7 @@ const Dashboard: React.FC = () => {
         </Paper>
       </Grid>
       <Grid item xs={12} md={4}>
-        <Paper elevation={3} style={{ padding: '20px' }}>
+        <Paper elevation={3} sx={{ padding: '20px' }}>
           <Typography variant="h6" gutterBottom>
             Active Positions
           </Typography>

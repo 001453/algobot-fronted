@@ -1,13 +1,16 @@
 export interface Position {
+  id: number;
   pair: string;
-  profit: number;
-  // Diğer gerekli özellikleri buraya ekleyin
+  entryPrice: string;
+  currentPrice: string;
+  profit: string;
+  amount: string;
 }
 
-export interface TradingPreferences {
-  // Trading tercihleri için gerekli alanları ekleyin
-}
-
-export interface NotificationSettings {
-  // Bildirim ayarları için gerekli alanları ekleyin
+export interface GeneralSettings {
+  darkMode: boolean;
+  language: string;
+  timeZone: string;
+  currency: string;
+  dateFormat: string;
 }

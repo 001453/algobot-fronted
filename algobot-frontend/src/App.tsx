@@ -1,23 +1,26 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { lightTheme, darkTheme } from './theme/theme';
+import { RootState } from './store';
+import Settings from './pages/Settings';
+// Diğer gerekli importlar...
 
 function App() {
+  const isDarkMode = useSelector((state: RootState) => state.settings.general.darkMode);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Welcome to AlgoBot</h1>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+      <CssBaseline />
+      <Router>
+        <Switch>
+          {/* ... diğer rotalar ... */}
+          <Route path="/settings" component={Settings} />
+        </Switch>
+      </Router>
+    </ThemeProvider>
   );
 }
 

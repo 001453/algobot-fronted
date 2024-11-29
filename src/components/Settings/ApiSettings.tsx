@@ -1,21 +1,23 @@
-import { Box, TextField, Button, Alert } from '@mui/material';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { Box, TextField, Button, Alert, Switch, FormControlLabel } from '@mui/material';
 
 interface ApiSettingsProps {
   settings: {
     apiKey: string;
     apiSecret: string;
+    enableTrading: boolean;
   };
-  onSave: (settings: { apiKey: string; apiSecret: string }) => void;
+  onSave: (settings: { apiKey: string; apiSecret: string; enableTrading: boolean }) => void;
 }
 
 export default function ApiSettings({ settings, onSave }: ApiSettingsProps) {
   const [apiKey, setApiKey] = useState(settings.apiKey);
   const [apiSecret, setApiSecret] = useState(settings.apiSecret);
+  const [enableTrading, setEnableTrading] = useState(settings.enableTrading);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    onSave({ apiKey, apiSecret });
+    onSave({ apiKey, apiSecret, enableTrading });
   };
 
   return (
@@ -39,6 +41,17 @@ export default function ApiSettings({ settings, onSave }: ApiSettingsProps) {
         onChange={(e) => setApiSecret(e.target.value)}
         fullWidth
         required
+      />
+
+      <FormControlLabel
+        control={
+          <Switch
+            checked={enableTrading}
+            onChange={(e) => setEnableTrading(e.target.checked)}
+            color="primary"
+          />
+        }
+        label="Enable Trading"
       />
 
       <Button 
