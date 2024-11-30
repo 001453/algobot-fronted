@@ -27,19 +27,19 @@ export const tradingSlice = createSlice({
   name: 'trading',
   initialState,
   reducers: {
-    setSelectedPair: (state, action: PayloadAction<string>) => {
+    setSelectedPair: (state: TradingState, action: PayloadAction<string>) => {
       state.selectedPair = action.payload;
     },
-    addPosition: (state, action: PayloadAction<Position>) => {
+    addPosition: (state: TradingState, action: PayloadAction<Position>) => {
       state.positions.push(action.payload);
     },
-    removePosition: (state, action: PayloadAction<number>) => {
+    removePosition: (state: TradingState, action: PayloadAction<number>) => {
       state.positions = state.positions.filter(pos => pos.id !== action.payload);
     },
-    updateBalance: (state, action: PayloadAction<number>) => {
+    updateBalance: (state: TradingState, action: PayloadAction<number>) => {
       state.balance = action.payload;
     },
-    setTrading: (state, action: PayloadAction<boolean>) => {
+    setTrading: (state: TradingState, action: PayloadAction<boolean>) => {
       state.isTrading = action.payload;
     },
   },

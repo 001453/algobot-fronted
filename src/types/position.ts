@@ -1,8 +1,8 @@
 export interface Position {
-    id: number;
-    pair: string;
-    entryPrice: string;
-    currentPrice: string;
-    profit: string;
-    amount: string;
-  }
+  id: string;
+  pair: string;
+  entryPrice: number;
+  currentPrice: number;
+  amount: number;
+  profit: number;
+}

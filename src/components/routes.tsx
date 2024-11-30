@@ -1,10 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
-import Trading from './pages/Trading';
-import History from './pages/History';
-import Settings from './pages/Settings';
+import Dashboard from '../pages/Dashboard';
+import Trading from '../pages/Trading';
+import History from '../pages/History';
+import Settings from '../pages/Settings';
 
-export default function AppRoutes() {
+const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
@@ -13,4 +13,6 @@ export default function AppRoutes() {
       <Route path="/settings" element={<Settings />} />
     </Routes>
   );
-}
+};
+
+export default AppRoutes;
