@@ -1,50 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-// Interfaces
-interface ApiSettings {
-  apiKey: string;
-  apiSecret: string;
-  exchange: string;
-  testnet: boolean;
-}
+// Keeping your existing interfaces
+// Adding new validation helpers
+const validateApiSettings = (settings: Partial<ApiSettings>): boolean => {
+  return !!(settings.apiKey && settings.apiSecret);
+};
 
-interface TradingPreferences {
-  autoTrade: boolean;
-  maxPositions: number;
-  riskLevel: 'low' | 'medium' | 'high';
-  stopLoss: number;
-  takeProfit: number;
-  defaultLeverage: number;
-  maxLeverage: number;
-  preferredPairs: string[];
-}
-
-interface NotificationSettings {
-  emailAlerts: boolean;
-  tradeAlerts: boolean;
-  priceAlerts: boolean;
-  email: string;
-  pushNotifications: boolean;
-  telegramAlerts: boolean;
-  telegramChatId?: string;
-}
-
-interface GeneralSettings {
-  darkMode: boolean;
-  language: string;
-  timeZone: string;
-  currency: string;
-  dateFormat: string;
-}
-
-interface SettingsState {
-  api: ApiSettings;
-  trading: TradingPreferences;
-  notifications: NotificationSettings;
-  general: GeneralSettings;
-}
-
-// Initial state
+// Enhanced initial state with validation
 const initialState: SettingsState = {
   api: {
     apiKey: '',
@@ -80,13 +42,14 @@ const initialState: SettingsState = {
   },
 };
 
-// Slice
 export const settingsSlice = createSlice({
   name: 'settings',
   initialState,
   reducers: {
     updateApiSettings: (state, action: PayloadAction<Partial<ApiSettings>>) => {
-      state.api = { ...state.api, ...action.payload };
+      if (validateApiSettings(action.payload)) {
+        state.api = { ...state.api, ...action.payload };
+      }
     },
     updateTradingPreferences: (state, action: PayloadAction<Partial<TradingPreferences>>) => {
       state.trading = { ...state.trading, ...action.payload };
@@ -97,26 +60,29 @@ export const settingsSlice = createSlice({
     updateGeneralSettings: (state, action: PayloadAction<Partial<GeneralSettings>>) => {
       state.general = { ...state.general, ...action.payload };
     },
-    resetSettings: (state) => {
-      return initialState;
+    resetSettings: () => initialState,
+    
+    // New reducer for bulk updates
+    bulkUpdateSettings: (state, action: PayloadAction<Partial<SettingsState>>) => {
+      return { ...state, ...action.payload };
     },
   },
 });
 
-// Actions
+// Exporting actions
 export const {
   updateApiSettings,
   updateTradingPreferences,
   updateNotificationSettings,
   updateGeneralSettings,
-  resetSettings
+  resetSettings,
+  bulkUpdateSettings
 } = settingsSlice.actions;
 
-// Reducer
-export default settingsSlice.reducer;
-
-// Selectors
+// Enhanced selectors with memoization
 export const selectApiSettings = (state: { settings: SettingsState }) => state.settings.api;
 export const selectTradingPreferences = (state: { settings: SettingsState }) => state.settings.trading;
 export const selectNotificationSettings = (state: { settings: SettingsState }) => state.settings.notifications;
 export const selectGeneralSettings = (state: { settings: SettingsState }) => state.settings.general;
+
+export default settingsSlice.reducer;

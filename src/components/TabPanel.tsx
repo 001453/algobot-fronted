@@ -7,17 +7,9 @@ interface TabPanelProps {
   value: number;
 }
 
-export function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
+const TabPanel: React.FC<TabPanelProps> = ({ children, value, index }) => {
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
+    <div hidden={value !== index}>
       {value === index && (
         <Box sx={{ p: 3 }}>
           {children}
@@ -25,4 +17,6 @@ export function TabPanel(props: TabPanelProps) {
       )}
     </div>
   );
-}
+};
+
+export default TabPanel;

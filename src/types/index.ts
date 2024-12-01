@@ -1,3 +1,4 @@
+// Trading Types
 export interface Position {
   id: number;
   pair: string;
@@ -5,9 +6,9 @@ export interface Position {
   currentPrice: string;
   profit: string;
   amount: string;
-  type: 'long' | 'short';  // Pozisyon türü
-  leverage?: number;  // Kaldıraç (opsiyonel)
-  openTime: Date;  // Pozisyonun açılış zamanı
+  type: 'long' | 'short';
+  leverage?: number;
+  openTime: Date;
 }
 
 export interface TradingPreferences {
@@ -16,38 +17,42 @@ export interface TradingPreferences {
   riskLevel: 'low' | 'medium' | 'high';
   stopLoss: number;
   takeProfit: number;
-  defaultLeverage: number;  // Varsayılan kaldıraç
-  maxLeverage: number;  // İzin verilen maksimum kaldıraç
-  preferredPairs: string[];  // Tercih edilen trading çiftleri
+  defaultLeverage: number;
+  maxLeverage: number;
+  preferredPairs: string[];
 }
 
+// Notification Types
 export interface NotificationSettings {
   emailAlerts: boolean;
   tradeAlerts: boolean;
   priceAlerts: boolean;
   email: string;
-  pushNotifications: boolean;  // Mobil push bildirimleri
-  telegramAlerts: boolean;  // Telegram bildirimleri
-  telegramChatId?: string;  // Telegram Chat ID (opsiyonel)
+  pushNotifications: boolean;
+  telegramAlerts: boolean;
+  telegramChatId?: string;
 }
 
 export type NotificationSettingsType = NotificationSettings;
 
+// General Settings Types
 export interface GeneralSettings {
   darkMode: boolean;
   language: string;
   timeZone: string;
-  currency: string;  // Tercih edilen para birimi
-  dateFormat: string;  // Tarih formatı
+  currency: string;
+  dateFormat: string;
 }
 
+// API Types
 export interface ApiSettings {
   apiKey: string;
   apiSecret: string;
-  exchange: string;  // Kullanılan borsa (örn. 'binance', 'ftx')
-  testnet: boolean;  // Test ağı kullanımı
+  exchange: string;
+  testnet: boolean;
 }
 
+// User Types
 export interface UserProfile {
   username: string;
   email: string;
@@ -56,9 +61,16 @@ export interface UserProfile {
   lastLogin: Date;
 }
 
+// Root State Type
 export interface SettingsState {
   general: GeneralSettings;
   api: ApiSettings;
   trading: TradingPreferences;
   notifications: NotificationSettings;
 }
+
+// Required package dependencies:
+// npm install @reduxjs/toolkit react-redux @types/react-redux
+// npm install @mui/material @emotion/react @emotion/styled
+// npm install date-fns
+// npm install axios

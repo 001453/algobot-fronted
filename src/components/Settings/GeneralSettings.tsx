@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
-import { Box, TextField, Switch, FormControlLabel, Button, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { 
+  Box, 
+  TextField, 
+  Switch, 
+  FormControlLabel, 
+  Button, 
+  Select, 
+  MenuItem, 
+  InputLabel, 
+  FormControl,
+  SelectChangeEvent 
+} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 interface GeneralSettingsType {
@@ -19,11 +30,27 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ settings, onSave }) =
   const [localSettings, setLocalSettings] = useState<GeneralSettingsType>(settings);
   const { t } = useTranslation();
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>) => {
-    const { name, value, checked } = event.target;
+  const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = event.target;
     setLocalSettings(prev => ({
       ...prev,
-      [name as string]: name === 'darkMode' ? checked : value
+      [name]: checked
+    }));
+  };
+
+  const handleSelectChange = (event: SelectChangeEvent) => {
+    const { name, value } = event.target;
+    setLocalSettings(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setLocalSettings(prev => ({
+      ...prev,
+      [name]: value
     }));
   };
 
@@ -38,53 +65,56 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ settings, onSave }) =
         control={
           <Switch
             checked={localSettings.darkMode}
-            onChange={handleChange}
+            onChange={handleSwitchChange}
             name="darkMode"
           />
         }
         label={t('general.darkMode')}
       />
+
       <FormControl fullWidth>
         <InputLabel id="language-label">{t('general.language')}</InputLabel>
         <Select
           labelId="language-label"
           value={localSettings.language}
-          onChange={handleChange}
+          onChange={handleSelectChange}
           name="language"
         >
           <MenuItem value="en">English</MenuItem>
           <MenuItem value="tr">Türkçe</MenuItem>
-          {/* Add more language options as needed */}
         </Select>
       </FormControl>
+
       <TextField
         fullWidth
         label={t('general.timeZone')}
         name="timeZone"
         value={localSettings.timeZone}
-        onChange={handleChange}
+        onChange={handleTextChange}
       />
+
       <FormControl fullWidth>
         <InputLabel id="currency-label">{t('general.currency')}</InputLabel>
         <Select
           labelId="currency-label"
           value={localSettings.currency}
-          onChange={handleChange}
+          onChange={handleSelectChange}
           name="currency"
         >
           <MenuItem value="USD">USD</MenuItem>
           <MenuItem value="EUR">EUR</MenuItem>
           <MenuItem value="TRY">TRY</MenuItem>
-          {/* Add more currency options as needed */}
         </Select>
       </FormControl>
+
       <TextField
         fullWidth
         label={t('general.dateFormat')}
         name="dateFormat"
         value={localSettings.dateFormat}
-        onChange={handleChange}
+        onChange={handleTextChange}
       />
+
       <Button type="submit" variant="contained" color="primary">
         {t('general.saveSettings')}
       </Button>

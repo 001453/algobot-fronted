@@ -1,10 +1,10 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import settingsReducer from './settingsSlice';
-// Diğer reducer'ları da import edin
+import tradingReducer from './tradingSlice';
 
 const rootReducer = combineReducers({
   settings: settingsReducer,
-  // Diğer reducer'ları da ekleyin
+  trading: tradingReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
