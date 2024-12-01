@@ -1,12 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { 
+  ApiSettings, 
+  TradingPreferences, 
+  NotificationSettings, 
+  GeneralSettings, 
+  SettingsState 
+} from '../types/settings';
 
-// Keeping your existing interfaces
-// Adding new validation helpers
 const validateApiSettings = (settings: Partial<ApiSettings>): boolean => {
   return !!(settings.apiKey && settings.apiSecret);
 };
 
-// Enhanced initial state with validation
 const initialState: SettingsState = {
   api: {
     apiKey: '',
@@ -61,15 +65,12 @@ export const settingsSlice = createSlice({
       state.general = { ...state.general, ...action.payload };
     },
     resetSettings: () => initialState,
-    
-    // New reducer for bulk updates
     bulkUpdateSettings: (state, action: PayloadAction<Partial<SettingsState>>) => {
       return { ...state, ...action.payload };
     },
   },
 });
 
-// Exporting actions
 export const {
   updateApiSettings,
   updateTradingPreferences,
@@ -79,7 +80,6 @@ export const {
   bulkUpdateSettings
 } = settingsSlice.actions;
 
-// Enhanced selectors with memoization
 export const selectApiSettings = (state: { settings: SettingsState }) => state.settings.api;
 export const selectTradingPreferences = (state: { settings: SettingsState }) => state.settings.trading;
 export const selectNotificationSettings = (state: { settings: SettingsState }) => state.settings.notifications;

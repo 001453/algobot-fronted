@@ -12,27 +12,20 @@ import {
   SelectChangeEvent 
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-
-interface GeneralSettingsType {
-  darkMode: boolean;
-  language: string;
-  timeZone: string;
-  currency: string;
-  dateFormat: string;
-}
+import { GeneralSettings as GeneralSettingsType } from '../../types/settings';
 
 interface GeneralSettingsProps {
   settings: GeneralSettingsType;
-  onSave: (settings: GeneralSettingsType) => void;
+  onSave: (settings: Partial<GeneralSettingsType>) => void;
 }
 
-const GeneralSettings: React.FC<GeneralSettingsProps> = ({ settings, onSave }) => {
-  const [localSettings, setLocalSettings] = useState<GeneralSettingsType>(settings);
+const GeneralSettings: React.FC<GeneralSettingsProps> = ({ settings: initialSettings, onSave }) => {
+  const [settings, setSettings] = useState<GeneralSettingsType>(initialSettings);
   const { t } = useTranslation();
 
   const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
-    setLocalSettings(prev => ({
+    setSettings(prev => ({
       ...prev,
       [name]: checked
     }));
@@ -40,7 +33,7 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ settings, onSave }) =
 
   const handleSelectChange = (event: SelectChangeEvent) => {
     const { name, value } = event.target;
-    setLocalSettings(prev => ({
+    setSettings(prev => ({
       ...prev,
       [name]: value
     }));
@@ -48,7 +41,7 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ settings, onSave }) =
 
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setLocalSettings(prev => ({
+    setSettings(prev => ({
       ...prev,
       [name]: value
     }));
@@ -56,7 +49,7 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ settings, onSave }) =
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSave(localSettings);
+    onSave(settings);
   };
 
   return (
@@ -64,7 +57,7 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ settings, onSave }) =
       <FormControlLabel
         control={
           <Switch
-            checked={localSettings.darkMode}
+            checked={settings.darkMode}
             onChange={handleSwitchChange}
             name="darkMode"
           />
@@ -76,7 +69,7 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ settings, onSave }) =
         <InputLabel id="language-label">{t('general.language')}</InputLabel>
         <Select
           labelId="language-label"
-          value={localSettings.language}
+          value={settings.language}
           onChange={handleSelectChange}
           name="language"
         >
@@ -89,7 +82,7 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ settings, onSave }) =
         fullWidth
         label={t('general.timeZone')}
         name="timeZone"
-        value={localSettings.timeZone}
+        value={settings.timeZone}
         onChange={handleTextChange}
       />
 
@@ -97,7 +90,7 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ settings, onSave }) =
         <InputLabel id="currency-label">{t('general.currency')}</InputLabel>
         <Select
           labelId="currency-label"
-          value={localSettings.currency}
+          value={settings.currency}
           onChange={handleSelectChange}
           name="currency"
         >
@@ -111,7 +104,7 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({ settings, onSave }) =
         fullWidth
         label={t('general.dateFormat')}
         name="dateFormat"
-        value={localSettings.dateFormat}
+        value={settings.dateFormat}
         onChange={handleTextChange}
       />
 

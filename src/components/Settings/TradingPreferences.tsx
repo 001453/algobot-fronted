@@ -1,31 +1,28 @@
 import React, { useState } from 'react';
 import { Box, FormControlLabel, Switch, TextField, MenuItem, Typography, Divider, Button } from '@mui/material';
+import { TradingPreferences as TradingPreferencesType } from '../../types/settings';
 
 interface TradingPreferencesProps {
-  preferences: {
-    autoTrade: boolean;
-    maxPositions: number;
-    riskLevel: 'low' | 'medium' | 'high';
-    stopLoss: number;
-    takeProfit: number;
-  };
-  onSave: (preferences: TradingPreferencesProps['preferences']) => void;
+  settings: TradingPreferencesType;
+  onSave: (settings: Partial<TradingPreferencesType>) => void;
 }
 
-const TradingPreferences: React.FC<TradingPreferencesProps> = ({ preferences: initialPreferences, onSave }) => {
-  const [preferences, setPreferences] = useState(initialPreferences);
+const TradingPreferences: React.FC<TradingPreferencesProps> = ({ settings: initialSettings, onSave }) => {
+  const [settings, setSettings] = useState(initialSettings);
 
-  const handleChange = (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (name: keyof TradingPreferencesType) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
-    setPreferences({
-      ...preferences,
+    setSettings({
+      ...settings,
       [name]: value
     });
   };
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    onSave(preferences);
+    onSave(settings);
   };
 
   return (
@@ -37,7 +34,7 @@ const TradingPreferences: React.FC<TradingPreferencesProps> = ({ preferences: in
         <FormControlLabel
           control={
             <Switch
-              checked={preferences.autoTrade}
+              checked={settings.autoTrade}
               onChange={handleChange('autoTrade')}
             />
           }
@@ -55,14 +52,14 @@ const TradingPreferences: React.FC<TradingPreferencesProps> = ({ preferences: in
           <TextField
             label="Max Positions"
             type="number"
-            value={preferences.maxPositions}
+            value={settings.maxPositions}
             onChange={handleChange('maxPositions')}
             sx={{ width: 200 }}
           />
           <TextField
             select
             label="Risk Level"
-            value={preferences.riskLevel}
+            value={settings.riskLevel}
             onChange={handleChange('riskLevel')}
             sx={{ width: 200 }}
           >
@@ -83,14 +80,14 @@ const TradingPreferences: React.FC<TradingPreferencesProps> = ({ preferences: in
           <TextField
             label="Stop Loss (%)"
             type="number"
-            value={preferences.stopLoss}
+            value={settings.stopLoss}
             onChange={handleChange('stopLoss')}
             sx={{ width: 200 }}
           />
           <TextField
             label="Take Profit (%)"
             type="number"
-            value={preferences.takeProfit}
+            value={settings.takeProfit}
             onChange={handleChange('takeProfit')}
             sx={{ width: 200 }}
           />
@@ -98,10 +95,10 @@ const TradingPreferences: React.FC<TradingPreferencesProps> = ({ preferences: in
       </Box>
 
       <Button type="submit" variant="contained" color="primary">
-        Save
+        Save Trading Preferences
       </Button>
     </Box>
   );
-}
+};
 
 export default TradingPreferences;

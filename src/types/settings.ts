@@ -1,7 +1,7 @@
 export interface ApiSettings {
   apiKey: string;
   apiSecret: string;
-  exchange: string;
+  exchange: 'binance' | 'kucoin' | 'bybit';  // Specific exchange types
   testnet: boolean;
 }
 
@@ -23,15 +23,15 @@ export interface NotificationSettings {
   email: string;
   pushNotifications: boolean;
   telegramAlerts: boolean;
-  telegramChatId?: string;
+  telegramChatId: string | null;
 }
 
 export interface GeneralSettings {
   darkMode: boolean;
-  language: string;
+  language: 'en' | 'tr' | 'es' | 'de';  // Supported languages
   timeZone: string;
-  currency: string;
-  dateFormat: string;
+  currency: 'USD' | 'EUR' | 'TRY' | 'BTC';  // Supported currencies
+  dateFormat: 'YYYY-MM-DD' | 'DD-MM-YYYY' | 'MM-DD-YYYY';  // Common date formats
 }
 
 export interface SettingsState {
@@ -40,3 +40,15 @@ export interface SettingsState {
   notifications: NotificationSettings;
   general: GeneralSettings;
 }
+
+// Validation types
+export type ValidationResult = {
+  isValid: boolean;
+  errors?: string[];
+};
+
+// Action types
+export type SettingsAction = {
+  type: string;
+  payload: Partial<SettingsState>;
+};

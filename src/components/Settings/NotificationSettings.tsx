@@ -1,32 +1,27 @@
 import React, { useState } from 'react';
 import { Box, FormControlLabel, Switch, TextField, Typography, Divider, Alert, Button } from '@mui/material';
+import { NotificationSettings as NotificationSettingsType } from '../../types/settings';
 
 interface NotificationSettingsProps {
-  notifications: {
-    emailAlerts: boolean;
-    tradeAlerts: boolean;
-    priceAlerts: boolean;
-    email: string;
-    pushNotifications: boolean;
-    telegramAlerts: boolean;
-    telegramChatId: string;
-  };
-  onSave: (notifications: NotificationSettingsProps['notifications']) => void;
+  settings: NotificationSettingsType;
+  onSave: (settings: Partial<NotificationSettingsType>) => void;
 }
 
-export default function NotificationSettings({ notifications: initialNotifications, onSave }: NotificationSettingsProps) {
-  const [notifications, setNotifications] = useState(initialNotifications);
+export default function NotificationSettings({ settings: initialSettings, onSave }: NotificationSettingsProps) {
+  const [settings, setSettings] = useState(initialSettings);
 
-  const handleChange = (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNotifications({
-      ...notifications,
+  const handleChange = (name: keyof NotificationSettingsType) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSettings({
+      ...settings,
       [name]: event.target.type === 'checkbox' ? event.target.checked : event.target.value
     });
   };
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    onSave(notifications);
+    onSave(settings);
   };
 
   return (
@@ -42,14 +37,14 @@ export default function NotificationSettings({ notifications: initialNotificatio
         <TextField
           fullWidth
           label="Email Address"
-          value={notifications.email}
+          value={settings.email}
           onChange={handleChange('email')}
           sx={{ mb: 2 }}
         />
         <FormControlLabel
           control={
             <Switch
-              checked={notifications.emailAlerts}
+              checked={settings.emailAlerts}
               onChange={handleChange('emailAlerts')}
             />
           }
@@ -66,7 +61,7 @@ export default function NotificationSettings({ notifications: initialNotificatio
         <FormControlLabel
           control={
             <Switch
-              checked={notifications.tradeAlerts}
+              checked={settings.tradeAlerts}
               onChange={handleChange('tradeAlerts')}
             />
           }
@@ -75,7 +70,7 @@ export default function NotificationSettings({ notifications: initialNotificatio
         <FormControlLabel
           control={
             <Switch
-              checked={notifications.priceAlerts}
+              checked={settings.priceAlerts}
               onChange={handleChange('priceAlerts')}
             />
           }
@@ -92,7 +87,7 @@ export default function NotificationSettings({ notifications: initialNotificatio
         <FormControlLabel
           control={
             <Switch
-              checked={notifications.pushNotifications}
+              checked={settings.pushNotifications}
               onChange={handleChange('pushNotifications')}
             />
           }
@@ -101,17 +96,17 @@ export default function NotificationSettings({ notifications: initialNotificatio
         <FormControlLabel
           control={
             <Switch
-              checked={notifications.telegramAlerts}
+              checked={settings.telegramAlerts}
               onChange={handleChange('telegramAlerts')}
             />
           }
           label="Enable Telegram Alerts"
         />
-        {notifications.telegramAlerts && (
+        {settings.telegramAlerts && (
           <TextField
             fullWidth
             label="Telegram Chat ID"
-            value={notifications.telegramChatId}
+            value={settings.telegramChatId}
             onChange={handleChange('telegramChatId')}
             sx={{ mt: 2 }}
           />
