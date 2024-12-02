@@ -1,40 +1,47 @@
 import React from 'react';
-import { Grid, Typography, Paper } from '@mui/material';
+import { Grid, Box } from '@mui/material';
 import PerformanceCards from '../components/Dashboard/PerformanceCards';
 import PortfolioChart from '../components/Dashboard/PortfolioChart';
 import ActivePositions from '../components/Dashboard/ActivePositions';
 import { Position } from '../types/position';
 
 const Dashboard: React.FC = () => {
-  // Bu veriler normalde bir API'dan veya state'ten gelecektir
   const balance = 10000;
   const positions: Position[] = [
-    // Örnek pozisyonlar
-    { id: '1', pair: 'BTC/USDT', entryPrice: 30000, currentPrice: 31000, amount: 0.1, profit: 100 },
-    { id: '2', pair: 'ETH/USDT', entryPrice: 2000, currentPrice: 1950, amount: 1, profit: -50 },
+    { 
+      id: '1', 
+      pair: 'BTC/USDT', 
+      entryPrice: 30000, 
+      currentPrice: 31000, 
+      amount: 0.1, 
+      profit: 100 
+    },
+    { 
+      id: '2', 
+      pair: 'ETH/USDT', 
+      entryPrice: 2000, 
+      currentPrice: 1950, 
+      amount: 1, 
+      profit: -50 
+    },
   ];
   const isTrading = true;
 
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12} md={8}>
-        <Paper elevation={3} sx={{ p: 2 }}>
-          <Typography variant="h6" gutterBottom>
-            Performance Overview
-          </Typography>
+    <Box sx={{ flexGrow: 1, p: 3 }}>
+      <Grid container spacing={3}>
+        <Grid item xs={12} lg={8}>
           <PerformanceCards balance={balance} isTrading={isTrading} />
-          <PortfolioChart />
-        </Paper>
-      </Grid>
-      <Grid item xs={12} md={4}>
-        <Paper elevation={3} sx={{ p: 2 }}>
-          <Typography variant="h6" gutterBottom>
-            Active Positions
-          </Typography>
+          <Box sx={{ mt: 3 }}>
+            <PortfolioChart />
+          </Box>
+        </Grid>
+        
+        <Grid item xs={12} lg={4}>
           <ActivePositions positions={positions} />
-        </Paper>
+        </Grid>
       </Grid>
-    </Grid>
+    </Box>
   );
 };
 
