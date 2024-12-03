@@ -1,7 +1,7 @@
 export interface ApiSettings {
   apiKey: string;
   apiSecret: string;
-  exchange: 'binance' | 'kucoin' | 'bybit';  // Specific exchange types
+  exchange: 'binance' | 'kucoin' | 'bybit';
   testnet: boolean;
 }
 
@@ -28,10 +28,10 @@ export interface NotificationSettings {
 
 export interface GeneralSettings {
   darkMode: boolean;
-  language: 'en' | 'tr' | 'es' | 'de';  // Supported languages
+  language: 'en' | 'tr' | 'es' | 'de';
   timeZone: string;
-  currency: 'USD' | 'EUR' | 'TRY' | 'BTC';  // Supported currencies
-  dateFormat: 'YYYY-MM-DD' | 'DD-MM-YYYY' | 'MM-DD-YYYY';  // Common date formats
+  currency: 'USD' | 'EUR' | 'TRY' | 'BTC';
+  dateFormat: 'YYYY-MM-DD' | 'DD-MM-YYYY' | 'MM-DD-YYYY';
 }
 
 export interface SettingsState {
@@ -41,14 +41,12 @@ export interface SettingsState {
   general: GeneralSettings;
 }
 
-// Validation types
-export type ValidationResult = {
+export interface ValidationResult {
   isValid: boolean;
-  errors?: string[];
-};
+  errors: string[];
+}
 
-// Action types
-export type SettingsAction = {
+export interface SettingsAction {
   type: string;
   payload: Partial<SettingsState>;
-};
+}

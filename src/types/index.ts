@@ -68,9 +68,3 @@ export interface SettingsState {
   trading: TradingPreferences;
   notifications: NotificationSettings;
 }
-
-// Required package dependencies:
-// npm install @reduxjs/toolkit react-redux @types/react-redux
-// npm install @mui/material @emotion/react @emotion/styled
-// npm install date-fns
-// npm install axios

@@ -5,7 +5,7 @@ import {
   NotificationSettings, 
   GeneralSettings, 
   SettingsState 
-} from '../types/settings';
+} from '../../types/settings';
 
 const validateApiSettings = (settings: Partial<ApiSettings>): boolean => {
   return !!(settings.apiKey && settings.apiSecret);
@@ -85,4 +85,4 @@ export const selectTradingPreferences = (state: { settings: SettingsState }) => 
 export const selectNotificationSettings = (state: { settings: SettingsState }) => state.settings.notifications;
 export const selectGeneralSettings = (state: { settings: SettingsState }) => state.settings.general;
 
-export default settingsSlice.reducer;
+export const settingsReducer = settingsSlice.reducer;

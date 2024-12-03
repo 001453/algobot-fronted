@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import settingsReducer from './settingsSlice';
+import { settingsReducer } from './slices/settingsSlice';
+import { testReducer } from './slices/testSlice';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 export const store = configureStore({
   reducer: {
     settings: settingsReducer,
+    test: testReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

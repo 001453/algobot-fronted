@@ -1,5 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Position } from '../types';
+import { Position } from '../../types';
+
+// PairStats interface'i ekleyelim
+interface PairStats {
+  volume24h: number;
+  priceChange24h: number;
+  highPrice24h: number;
+  lowPrice24h: number;
+}
 
 interface TradingState {
   positions: Position[];
@@ -8,12 +16,7 @@ interface TradingState {
   isTrading: boolean;
   tradingHistory: Position[];
   pairStats: {
-    [key: string]: {
-      volume24h: number;
-      priceChange24h: number;
-      highPrice24h: number;
-      lowPrice24h: number;
-    }
+    [key: string]: PairStats;
   };
 }
 
@@ -51,12 +54,7 @@ export const tradingSlice = createSlice({
     },
     updatePairStats: (state, action: PayloadAction<{
       pair: string;
-      stats: {
-        volume24h: number;
-        priceChange24h: number;
-        highPrice24h: number;
-        lowPrice24h: number;
-      }
+      stats: PairStats;
     }>) => {
       state.pairStats[action.payload.pair] = action.payload.stats;
     },
@@ -71,5 +69,10 @@ export const {
   setTrading,
   updatePairStats
 } = tradingSlice.actions;
+
+// RootState type'ını export edelim
+export type RootState = {
+  trading: TradingState;
+};
 
 export default tradingSlice.reducer;
