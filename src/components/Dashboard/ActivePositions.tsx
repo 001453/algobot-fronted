@@ -3,10 +3,11 @@ import { Box, Typography, Paper, Grid, Chip } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
-import { Position } from '../../types/position';
+import { Position } from '../../types';
 
 interface ActivePositionsProps {
   positions: Position[];
+  onPositionClose: (id: number) => void;
 }
 
 const PositionCard = styled(Paper)(({ theme }) => ({
@@ -36,9 +37,9 @@ const ActivePositions: React.FC<ActivePositionsProps> = ({ positions }) => {
                   {position.pair}
                 </Typography>
                 <Chip
-                  icon={position.profit >= 0 ? <TrendingUpIcon /> : <TrendingDownIcon />}
-                  label={`${position.profit > 0 ? '+' : ''}${position.profit}%`}
-                  color={position.profit >= 0 ? 'success' : 'error'}
+                  icon={Number(position.profit) >= 0 ? <TrendingUpIcon /> : <TrendingDownIcon />}
+                  label={`${Number(position.profit) > 0 ? '+' : ''}${position.profit}%`}
+                  color={Number(position.profit) >= 0 ? 'success' : 'error'}
                   variant="outlined"
                 />
               </Box>
@@ -49,7 +50,7 @@ const ActivePositions: React.FC<ActivePositionsProps> = ({ positions }) => {
                 Entry Price
               </Typography>
               <Typography variant="body1">
-                ${position.entryPrice.toLocaleString()}
+                ${Number(position.entryPrice).toLocaleString()}
               </Typography>
             </Grid>
             
@@ -58,7 +59,7 @@ const ActivePositions: React.FC<ActivePositionsProps> = ({ positions }) => {
                 Current Price
               </Typography>
               <Typography variant="body1">
-                ${position.currentPrice.toLocaleString()}
+                ${Number(position.currentPrice).toLocaleString()}
               </Typography>
             </Grid>
             

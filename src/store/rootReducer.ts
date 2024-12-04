@@ -4,7 +4,6 @@ import tradingReducer from './slices/tradingSlice';
 import portfolioReducer from './slices/portfolioSlice';
 import authReducer from './slices/authSlice';
 
-// Combine all reducers
 const rootReducer = combineReducers({
   settings: settingsReducer,
   trading: tradingReducer,
@@ -12,10 +11,9 @@ const rootReducer = combineReducers({
   auth: authReducer
 });
 
-// Type definitions for global state
 export type RootState = ReturnType<typeof rootReducer>;
 
-// Selector types
+// Root state selectors
 export const selectRoot = (state: RootState) => state;
 export const selectSettings = (state: RootState) => state.settings;
 export const selectTrading = (state: RootState) => state.trading;

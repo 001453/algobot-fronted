@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Alert, Switch, FormControlLabel } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { updateApiSettings } from '../../store/slices/settingsSlice';
 
 interface ApiSettingsProps {
   settings: {
@@ -14,10 +16,13 @@ export default function ApiSettings({ settings, onSave }: ApiSettingsProps) {
   const [apiKey, setApiKey] = useState(settings.apiKey);
   const [apiSecret, setApiSecret] = useState(settings.apiSecret);
   const [enableTrading, setEnableTrading] = useState(settings.enableTrading);
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    onSave({ apiKey, apiSecret, enableTrading });
+    const newSettings = { apiKey, apiSecret, enableTrading };
+    dispatch(updateApiSettings(newSettings));
+    onSave(newSettings);
   };
 
   return (

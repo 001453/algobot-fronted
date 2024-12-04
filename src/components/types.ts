@@ -1,3 +1,5 @@
+export type PositionType = 'long' | 'short';
+
 export interface Position {
   id: number;
   pair: string;
@@ -5,6 +7,9 @@ export interface Position {
   currentPrice: string;
   profit: string;
   amount: string;
+  openTime: Date;
+  leverage: number;
+  type: PositionType;
 }
 
 export interface GeneralSettings {

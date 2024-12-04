@@ -5,7 +5,8 @@ import {
   NotificationSettings, 
   GeneralSettings, 
   SettingsState 
-} from '../../types/settings';
+} from '../types/settings';
+
 
 const validateApiSettings = (settings: Partial<ApiSettings>): boolean => {
   return !!(settings.apiKey && settings.apiSecret);
@@ -35,7 +36,7 @@ const initialState: SettingsState = {
     email: '',
     pushNotifications: false,
     telegramAlerts: false,
-    telegramChatId: '',
+    telegramChatId: null,
   },
   general: {
     darkMode: false,
@@ -85,4 +86,4 @@ export const selectTradingPreferences = (state: { settings: SettingsState }) => 
 export const selectNotificationSettings = (state: { settings: SettingsState }) => state.settings.notifications;
 export const selectGeneralSettings = (state: { settings: SettingsState }) => state.settings.general;
 
-export const settingsReducer = settingsSlice.reducer;
+export default settingsSlice.reducer;
